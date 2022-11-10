@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+{% load static %}
+{% load i18n %}
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>UmmahConsulting</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<!-- google fonts -->
+
+	<!-- Css link -->
+	<link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+	<link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
+	<link rel="stylesheet" href="{% static 'css/owl.carousel.css' %}">
+	<link rel="stylesheet" href="{% static 'css/owl.transitions.css' %}">
+	<link rel="stylesheet" href="{% static 'css/animate.min.css' %}">
+	<link rel="stylesheet" href="{% static 'css/lightbox.css' %}">
+	<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+	<link rel="stylesheet" href="{% static 'css/preloader.css' %}">
+	<link rel="stylesheet" href="{% static 'css/image.css' %}">
+	<link rel="stylesheet" href="{% static 'css/icon.css' %}">
+	<link rel="stylesheet" href="{% static 'css/style.css' %}">
+	<link rel="stylesheet" href="{% static 'css/responsive.css' %}">
+
+</head>
+
+<body id="top">
+	<header id="navigation" class="navbar-fixed-top animated-header">
+		<div class="container">
+			<div class="navbar-header">
+				<!-- responsive nav button -->
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<!-- /responsive nav button -->
+
+				<!-- logo -->
+				<h1 class="navbar-brand">
+					<a href="#body"><img src="{% static 'img/logo.png' %}" height="40" width="164" alt=""></a>
+				</h1>
+				<!-- /logo -->
+			</div>
+
+			<form action="{% url 'set_language' %}" method="post">{% csrf_token %}
+				<input name="next" type="hidden" value="{{ redirect_to }}">
+				<select name="language">
+					{% get_current_language as LANGUAGE_CODE %}
+					{% get_available_languages as LANGUAGES %}
+					{% get_language_info_list for LANGUAGES as languages %}
+					{% for language in languages %}
+						<option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected{% endif %}>
+							{{ language.name_local }} ({{ language.code }})
+						</option>
+					{% endfor %}
+				</select>
+				<input type="submit" value="Go">
+			</form>
+
+			<!-- main nav -->
+			<nav class="collapse navbar-collapse navbar-right" role="navigation">
+				<ul id="nav" class="nav navbar-nav menu">
+					<li><a href="#top">{% trans 'Asosiy Uy' %}</a></li>
+					<li><a href="#features">{% trans 'Xizmatlar' %}</a></li>
+					<li><a href="#portfolio">{% trans 'Taqdimot' %}</a></li>
+					<li><a href="#team">{% trans 'Jamoa' %}</a></li>
+					<li><a href="#pricing-table">{% trans 'Narx' %}</a></li>
+					<li><a href="#blog">{% trans 'Blog' %}</a></li>
+					<li><a href="#testimonial">{% trans 'Guvohnoma' %}</a></li>
+					<li><a href="#contact-form">{% trans "Bog'lanish" %}</a></li>
+				</ul>
+
+			</nav>
+			<!-- /main nav -->
+			
+
+		</div>
+	</header>
+	
+
+
+
+	<div class="wrapper">
+		<section id="banner">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="block">
+							<h1>{% trans 'Site Title' %}</h1>
+							<h2>   </h2>
+							<div class="buttons">
+								<a href="#" class="btn btn-learn">Purchase Now</a>
+								<a href="#" class="btn btn-learn">View Featurese</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="scrolldown">
+				<a id="scroll" href="#features" class="scroll"></a>
+			</div>
+		</section>
+		
+
+		<section id="features">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="title">
+							<h2>{% trans 'Xizmatlar' %}</h2>
+							<p>{% trans 'Xizmatlar title' %}<br> {% trans 'Xizmatlar description' %}
+							</p>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					{% for i in Services %}				
+					<div class="col-md-4 col-xs-6 col-sm-6">
+						<div class="feature-block text-center">
+							<div class="icon-box">
+								<i class="ion-easel"></i>
+							</div>
+							<h2 class="wow fadeInUp" data-wow-delay=".3s">{{ i.name }}</h2><br>
+							<h5 class="wow fadeInUp"   font-family: Arial, Helvetica, sans-serif; data-wow-delay=".5s">{{ i.description }}</h5><br>
+							<a href="{% url 'basic_app:blog' %}">{% trans "Ba'tafsil Ma'lumot" %}</a>
+						</div>
+					</div>
+					
+					{% endfor %}
+			</div>
+		</section>
+		<section id="counter">
+			<div class="container">
+				<div class="row">
+					<div class="title">
+						<h2>{% trans "Faktlar" %}</h2>
+						<p>{% trans "Fakt title" %}<br> {% trans "Fakt description" %}</p>
+					</div>
+					{% for a in Facts %}
+					<div class="col-md-3 col-sm-6 col-xs-6">
+						<div class="stat-count">
+						<div class="block wow fadeInRight" data-wow-delay=".3s">
+							<i class="ion-code"></i>
+							<p class="count-text">
+								<span class="stat-timer">{{ a.number }}</span> k
+							</p>
+							<p>{{ a.name }}</p>
+						</div>
+					</div>
+					</div>
+					{% endfor %}
+				</div>
+			</div>
+		</section>
+		
+		<section id="portfolio">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="title">
+							<h2>{% trans "Portfolio title" %}</h2>
+							<p>{% trans "Portfolio des" %} <br> {% trans "Portfolio des2" %}
+							</p>
+						</div>
+						<div class="block">
+							<div class="recent-work-mixMenu">
+								<ul>
+									<li><button class="filter" data-filter="all">{% trans "Show all" %}</button></li>
+									<li><button class="filter" data-filter=".category-2">{% trans "Show Printing" %}</button></li>
+									<li><button class="filter" data-filter=".category-1">{% trans "Show Web" %}</button></li>
+									<li><button class="filter" data-filter=".category-2">{% trans "Show Illustration" %}</button></li>
+									<li><button class="filter" data-filter=".category-1">{% trans "Show Media" %}</button></li>
+								</ul>
+							</div>
+							<div class="recent-work-pic">
+								<ul id="mixed-items">
+									<li class="mix category-1 col-md-4 col-xs-6" data-my-order="1">
+										<a class="example-image-link" href="{% static 'img/edu7.jpg' %}" data-lightbox="example-set">
+											<img class="img-responsive" src="{% static 'img/edu7.jpg' %}" alt="">
+											<div class="overlay">
+												<h3>Web design</h3>
+												<i class="ion-ios-plus-empty"></i>
+											</div>
+										</a>
+									</li>
+									<li class="mix category-2 col-md-4 col-xs-6" data-my-order="2">
+										<a class="example-image-link" href="{% static 'img/edu2.jpeg' %}" data-lightbox="example-set">
+											<img class="img-responsive" src="{% static 'img/edu2.jpeg' %}" alt="">
+											<div class="overlay">
+												<h3>Web design</h3>
+												<i class="ion-ios-plus-empty"></i>
+											</div>
+										</a>
+									</li>
+									<li class="mix category-1 col-md-4 col-xs-6" data-my-order="3">
+										<a class="example-image-link" href="{% static 'img/edu8.jpg' %}" data-lightbox="example-set">
+											<img class="img-responsive" src="{% static 'img/edu8.jpg' %}" alt="">
+											<div class="overlay">
+												<h3>Web design</h3>
+												<i class="ion-ios-plus-empty"></i>
+											</div>
+										</a>
+									</li>
+									<li class="mix category-2 col-md-4 col-xs-6" data-my-order="4">
+										<a class="example-image-link" href="{% static 'img/edu4.jpg' %}" data-lightbox="example-set">
+											<img class="img-responsive" src="{% static 'img/edu4.jpg' %}" alt="">
+											<div class="overlay">
+												<h3>Web design</h3>
+												<i class="ion-ios-plus-empty"></i>
+											</div>
+										</a>
+									</li>
+									<li class="mix category-1 col-md-4 col-xs-6" data-my-order="5">
+										<a class="example-image-link" href="{% static 'img/edu5.jpg' %}" data-lightbox="example-set">
+											<img class="img-responsive" src="{% static 'img/edu5.jpg' %}" alt="">
+											<div class="overlay">
+												<h3>Web design</h3>
+												<i class="ion-ios-plus-empty"></i>
+											</div>
+										</a>
+									</li>
+									<li class="mix category-2 col-md-4 col-xs-6" data-my-order="6">
+										<a class="example-image-link" href="{% static 'img/edu6.jpg' %}" data-lightbox="example-set">
+											<img class="img-responsive" src="{% static 'img/edu6.jpg' %}" alt="">
+											<div class="overlay">
+												<h3>Web design</h3>
+												<i class="ion-ios-plus-empty"></i>
+											</div>
+										</a>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		{% comment %} <section id="play-video">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="block">
+							<h2 class="wow fadeInUp" data-wow-delay=".3s">GET THE TEMPLATE</h2>
+							<p class="wow fadeInUp" data-wow-delay=".5s">Dantes remained confused and silent by this explanation of
+								the </p>
+							<a href="https://vimeo.com/channels/staffpicks/145743834" class="html5lightbox" data-width=800
+								data-height=400>
+								<div class="button ion-ios-play-outline wow zoomIn" data-wow-delay=".3s"></div>
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section> {% endcomment %}
+		<section id="team">
+			<div class="container">
+				<div class="row">
+					<div class="title">
+						<h2>{% trans "Jamoa" %}</h2>
+						<p>{% trans "Jamoa title" %}<br>{% trans "Jamoa des" %}</p>
+					</div>
+					{% for b in Team %}
+					<div class="col-md-4 col-sm-4 col-xs-6">
+						<div class="block wow fadeInLeft" data-wow-delay=".3s">
+							<img src=  {{ b.img.url }} alt="">
+							<div class="team-overlay">
+								<h3>{{ b.name }} <span>{{ b.prof }}</span></h3>
+								<span class="icon"><i class="ion-quote"></i></span>
+								<p>{{ b.des }}</p>
+							</div>
+						</div>
+					</div>
+					{% endfor %}
+				</div>
+			</div>
+		</section>
+		<section id="pricing-table">
+			<div class="container">
+				<div class="row">
+					<div class="title">
+						<h2>{% trans "Narx" %}</h2>
+						<p>{% trans "Narx title" %}<br> {% trans "Narx des" %}</p>
+					</div>
+					{% for c in Price %}
+					<div class="col-md-4 col">
+						<div class="block text-center wow fadeInLeft" data-wow-delay=".3s">
+							<ul>
+								<li>
+									<h4>{{ c.name }}</h4>
+									<p>&#36; {{ c.price }} <span>{{ c.month }}</span></p>
+								</li>
+								<li>
+									<p>{{ c.addition1 }}</p>
+								</li>
+								<li>
+									<p>{{ c.addition2 }}</p>
+								</li>
+								<li>
+									<p>{{ c.addition3 }}</p>
+								</li>
+								<li>
+									<p>{{ c.addition4 }}</p>
+								</li>
+								<li>
+									<p>{{ c.addition5 }}</p>
+								</li>
+								<li>
+									<p>{% trans "Ekranni ulashish" %}</p>
+								</li>
+								<li>
+									<a href="#" class="btn btn-buy">{% trans "Hoziroq sotib olish" %}</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+					{% endfor %}
+				</div>
+			</div>
+		</section>
+
+		<section id="blog">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="title">
+							<h2>{% trans "Blog" %}</h2>
+							<p>{% trans "Blog title" %} <br> {% trans "Blog des" %}
+							</p>
+						</div>
+						
+						<div id="blog-post" class="owl-carousel">
+							{% for d in blog %}
+							<div class="blog-box">
+								<div class="block">
+									<img src={{ d.img.url }} alt="" class="img-responsive">
+									<div class="content">
+										<h4><a href="{% url 'basic_app:blog' d.id %}">{{ d.name }}</a></h4>
+										<small>{{ d.date }}</small>
+										<p>
+											{{ d.des }}
+										</p>
+										<a href="{% url 'basic_app:blog' d.id %}" class="btn btn-read">{% trans "Ko'ptoq" %}</a>
+								</div>
+							</div>
+						</div>	
+					{% endfor %} 
+				</div>
+				</div>
+			</div>
+		</section>
+		<section id="testimonial">
+			<div class="container">
+				<div class="row">
+					<div class="title">
+						<h2>{% trans "Guvohnoma" %}</h2>
+						<p>{% trans "Guvohnoma title" %}<br> {% trans "Guvohnoma des" %}</p>
+					</div>
+					{% for e in Testimonial %}
+					<div class="col col-md-6">
+						<div class="media wow fadeInLeft" data-wow-delay=".3s">
+							<div class="media-left">
+								<a href="#">
+									<img src={{ e.img.url }} alt="" width="70"; 
+									height="70" >
+								</a>
+							</div>
+							<div class="media-body">
+								<a href="#">
+									<h4 class="media-heading">{{ e.name }}</h4>
+								</a>
+								<p>{{ e.des }}</p>
+							</div>
+						</div>
+					</div>
+					 {% endfor %}
+				</div>
+			</div>
+		</section>
+		<section id="client-logo">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="block">
+							<div id="Client_Logo" class="owl-carousel">
+								<div>
+									<a href="#"><img class="img-responsive" src="{% static 'img/clientLogo/client-logo1.jpg' %}" alt=""></a>
+								</div>
+								<div>
+									<a href="#"><img class="img-responsive" src="{% static 'img/clientLogo/client-logo2.jpg' %}" alt=""></a>
+								</div>
+								<div>
+									<a href="#"><img class="img-responsive" src="{% static 'img/clientLogo/client-logo3.jpg' %}" alt=""></a>
+								</div>
+								<div>
+									<a href="#"><img class="img-responsive" src="{% static 'img/clientLogo/client-logo4.jpg' %}" alt=""></a>
+								</div>
+								<div>
+									<a href="#"><img class="img-responsive" src="{% static 'img/clientLogo/client-logo5.jpg' %}" alt=""></a>
+								</div>
+								<div>
+									<a href="#"><img class="img-responsive" src="{% static 'img/clientLogo/client-logo6.jpg' %}" alt=""></a>
+								</div>
+								<div>
+									<a href="#"><img class="img-responsive" src="{% static 'img/clientLogo/client-logo1.jpg' %}" alt=""></a>
+								</div>
+								<div>
+									<a href="#"><img class="img-responsive" src="{% static 'img/clientLogo/client-logo2.jpg' %}" alt=""></a>
+								</div>
+								<div>
+									<a href="#"><img class="img-responsive" src="{% static 'img/clientLogo/client-logo3.jpg' %}" alt=""></a>
+								</div>
+								<div>
+									<a href="#"><img class="img-responsive" src="{% static 'img/clientLogo/client-logo4.jpg' %}" alt=""></a>
+								</div>
+								<div>
+									<a href="#"><img class="img-responsive" src="{% static 'img/clientLogo/client-logo5.jpg' %}" alt=""></a>
+								</div>
+								<div>
+									<a href="#"><img class="img-responsive" src="{% static 'img/clientLogo/client-logo6.jpg' %}" alt=""></a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<section id="contact-form">
+			<div class="container">
+				<div class="row">
+					<div class="title">
+						<h2>{% trans "Biz bilan bog'lanish" %}</h2>
+						<p>{% trans "Contact title" %}<br> {% trans "Contact des" %}</p>
+					</div>
+					<div class="col-md-6 col">
+						<!-- map -->
+						<div class="map">
+							<div id="googleMap"></div>
+						</div>
+						<!--/map-->
+
+					</div>
+					<div class="col-md-6">
+						<form method='post' action=''>
+							{% csrf_token %}
+							{{ form.name.errors }}
+							{{ form.name }}
+							{{ form.email.errors }}
+							{{ form.email }}
+							{{ form.phone.errors }}
+							{{ form.phone }}
+							{{ form.message.errors }}
+							{{ form.message }}
+
+							<!-- <input type="text" class="form-control" placeholder="Name">
+							<input type="text" class="form-control" placeholder="Email">
+							<textarea class="form-control" rows="3" placeholder="Message"></textarea> -->
+							<button class="btn btn-default" type="submit">{% trans "Yuborish" %}</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</section>
+		<footer>
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="block">
+							<a href="#"><img src="{% static 'img/logo.png' %}" alt=""></a>
+							<p>All rights reserved © 2015</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</footer>
+	</div>
+
+	<!-- load Js -->
+	<script src="{% static 'js/jquery-1.11.3.min.js' %}"></script>
+	<script src="{% static 'js/bootstrap.min.js' %}"></script>
+	<script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDY0kkJiTPVd2U7aTOAwhc9ySH6oHxOIYM&amp;sensor=false">
+	</script>
+	<script src="{% static 'js/waypoints.min.js' %}"></script>
+	<script src="{% static 'js/lightbox.js' %}"></script>
+	<script src="{% static 'js/jquery.counterup.min.js' %}"></script>
+	<script src="{% static 'js/owl.carousel.min.js' %}"></script>
+	<script src="{% static 'js/html5lightbox.js' %}"></script>
+	<script src="{% static 'js/jquery.mixitup.js' %}"></script>
+	<script src="{% static 'js/wow.min.js' %}"></script>
+	<script src="{% static 'js/jquery.scrollUp.js' %}"></script>
+	<script src="{% static 'js/jquery.sticky.js' %}"></script>
+	<script src="{% static 'js/jquery.nav.js' %}"></script>
+	<script src="{% static 'js/main.js' %}"></script>
+</body>
+
+</html>
